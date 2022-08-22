@@ -1,26 +1,23 @@
-package com.example.BookShop.component;
+package com.example.bookshop.services;
 
-import com.example.BookShop.JPA.AuthorJPA;
-import com.example.BookShop.exception.AllException;
-import com.example.BookShop.model.Author;
+import com.example.bookshop.repositories.AuthorRepository;
+import com.example.bookshop.exceptions.AllException;
+import com.example.bookshop.models.Author;
 
-import com.example.BookShop.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class AuthorComponent {
+public class AuthorService {
 
     @Autowired
-    AuthorJPA authorJPA;
+    AuthorRepository authorRepository;
     private final RestTemplate restTemplate = new RestTemplate();
     public void addAuthor(Author Author)
     {
@@ -28,12 +25,12 @@ public class AuthorComponent {
         {
             throw new AllException("The name is empty",HttpStatus.BAD_REQUEST,Author);
         }
-        authorJPA.save(Author);
+        authorRepository.save(Author);
     }
     public void DeleteAuthor(Integer id) {
        try {
            restTemplate.delete("http://localhost:8080/DeleteAuthorBooks/" + id);
-           authorJPA.deleteById(id);
+           authorRepository.deleteById(id);
        }catch (EmptyResultDataAccessException e)
        {
            throw new AllException("This Author is Not in our BookShop",HttpStatus.NOT_FOUND);
@@ -42,7 +39,7 @@ public class AuthorComponent {
 
     public List<Author> GetAuthors() {
         List<Author> Authors= new ArrayList<Author>();
-        authorJPA.findAll().forEach(Authors::add);
+        authorRepository.findAll().forEach(Authors::add);
         return Authors;
     }
 

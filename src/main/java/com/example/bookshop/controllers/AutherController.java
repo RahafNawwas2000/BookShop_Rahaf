@@ -1,8 +1,6 @@
-package com.example.BookShop.Controller;
-
-import com.example.BookShop.component.AuthorComponent;
-import com.example.BookShop.model.Author;
-import com.example.BookShop.model.Book;
+package com.example.bookshop.controllers;
+import com.example.bookshop.services.AuthorService;
+import com.example.bookshop.models.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +10,7 @@ import java.util.List;
 public class AutherController {
 
     @Autowired
-    AuthorComponent AuhtorComp;
+    AuthorService AuhtorComp;
 
     @RequestMapping(value = "/Authors")
     public List<Author> GetAuthors()

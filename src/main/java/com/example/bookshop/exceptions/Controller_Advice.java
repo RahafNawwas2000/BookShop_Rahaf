@@ -1,12 +1,9 @@
-package com.example.BookShop.exception;
+package com.example.bookshop.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 @ControllerAdvice
 public class Controller_Advice {

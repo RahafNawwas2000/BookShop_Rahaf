@@ -1,7 +1,6 @@
-package com.example.BookShop.exception;
+package com.example.bookshop.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.aspectj.bridge.Message;
 import org.springframework.http.HttpStatus;
 
 import java.util.Date;

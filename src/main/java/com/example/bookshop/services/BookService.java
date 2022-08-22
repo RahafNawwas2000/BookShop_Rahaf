@@ -1,26 +1,24 @@
-package com.example.BookShop.component;
+package com.example.bookshop.services;
 
-import com.example.BookShop.JPA.AuthorJPA;
-import com.example.BookShop.JPA.BookJPA;
-import com.example.BookShop.exception.AllException;
-import com.example.BookShop.model.Author;
-import com.example.BookShop.model.Book;
+import com.example.bookshop.repositories.AuthorRepository;
+import com.example.bookshop.repositories.BookRepository;
+import com.example.bookshop.exceptions.AllException;
+import com.example.bookshop.models.Book;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 @Component
-public class BookComponent {
+public class BookService {
     @Autowired
-    BookJPA BOOK_JPA;
+    BookRepository BOOK_JPA;
     @Autowired
-    AuthorJPA authorJPA;
+    AuthorRepository authorRepository;
     public void CreateBook(Book book) {
         if(book.getName()==null||book.getIsbn()==null)
         {

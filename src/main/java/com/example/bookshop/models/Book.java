@@ -1,9 +1,8 @@
-package com.example.BookShop.model;
+package com.example.bookshop.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @Entity

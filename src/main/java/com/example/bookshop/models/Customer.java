@@ -1,4 +1,4 @@
-package com.example.BookShop.model;
+package com.example.bookshop.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;

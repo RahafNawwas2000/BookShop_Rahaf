@@ -1,10 +1,9 @@
-package com.example.BookShop.Controller;
+package com.example.bookshop.controllers;
 
-import com.example.BookShop.component.BookComponent;
-import com.example.BookShop.model.Book;
-import com.example.BookShop.model.Author;
+import com.example.bookshop.services.BookService;
+import com.example.bookshop.models.Book;
+import com.example.bookshop.models.Author;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    BookComponent bookComp;
+    BookService bookComp;
 
     @RequestMapping(method = RequestMethod.POST,value ="Author/{AuthorID}/CreateBook" )
     public void CreateBook(@PathVariable Integer AuthorID, @RequestBody Book book) {

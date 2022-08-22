@@ -1,10 +1,9 @@
-package com.example.BookShop.Controller;
+package com.example.bookshop.controllers;
 
-import com.example.BookShop.component.CustomerComponent;
-import com.example.BookShop.model.Book;
-import com.example.BookShop.model.Customer;
+import com.example.bookshop.services.CustomerService;
+import com.example.bookshop.models.Book;
+import com.example.bookshop.models.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    CustomerComponent CustomerComp;
+    CustomerService CustomerComp;
 
     @RequestMapping(value = "/Customers")
     public List<Customer> GetAllCustomers()
