@@ -1,6 +1,9 @@
 package com.example.bookshop.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -13,8 +16,9 @@ public class Author {
     String name;
 
 
-//    @OneToMany(mappedBy = "author")
-//    List<Book> books;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonBackReference
+    List<Book> books;
 
 
     public Author() {

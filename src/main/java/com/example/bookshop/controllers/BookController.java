@@ -9,38 +9,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/books")
 public class BookController {
 
     @Autowired
     BookService bookComp;
 
-    @RequestMapping(method = RequestMethod.POST,value ="Author/{AuthorID}/CreateBook" )
-    public void CreateBook(@PathVariable Integer AuthorID, @RequestBody Book book) {
-        book.setAuthor(new Author(AuthorID,""));
+
+    //http://localhost:8080/books/createBook/?authorId=1
+    @RequestMapping(method = RequestMethod.POST,value ="/createBook" )
+    public void CreateBook(@RequestParam("authorId") Integer authorID, @RequestBody Book book) {
+        System.out.println("Id"+authorID);
+        book.setAuthor(new Author(authorID,""));
         bookComp.CreateBook(book);
     }
-    @RequestMapping(value = "/Books")
+    //http://localhost:8080/books/all
+    @RequestMapping(value = "/all")
     public List<Book> GetBooks()
     {
         return bookComp.GetAllBooks();
     }
-    @RequestMapping(value = "/Authors/{id}/Books")
-    public List<Book> GetBooksByAuthorId(@PathVariable Integer id)
+    //http://localhost:8080/books/getBooksByAuthor?authorId=1
+    @RequestMapping(value = "/getBooksByAuthor")
+    public List<Book> GetBooksByAuthorId(@RequestParam("authorId") Integer authorId)
     {
-        System.out.println("from Controller"+id);
-        return bookComp.GetBookByAuthorId(id);
+        return bookComp.GetBookByAuthorId(authorId);
     }
-    @RequestMapping(value = "/Authors/{id}/Books/{BookID}")
+    //http://localhost:8080/books/getBookID/1
+    @RequestMapping(value = "getBookID/{BookID}")
     public Book GetBookByID(@PathVariable Integer BookID)
     {
         return bookComp.GetBook(BookID);
     }
-
-    @RequestMapping(value = "/DeleteBook/{BookId}",method = RequestMethod.DELETE)
+    //http://localhost:8080/books/deleteBook/1
+    @RequestMapping(value = "/deleteBook/{BookId}",method = RequestMethod.DELETE)
     public void DeleteBook(@PathVariable Integer BookId) {
         bookComp.DeleteBook(BookId);
     }
-    @RequestMapping(value ="DeleteAuthorBooks/{AuthorID}",method = RequestMethod.DELETE)
+    @RequestMapping(value ="deleteAuthorBooks/{AuthorID}",method = RequestMethod.DELETE)
     public void DeleteAuthorBooks(@PathVariable Integer AuthorID){
        bookComp.DeleteAuthorBooks(AuthorID);
     }

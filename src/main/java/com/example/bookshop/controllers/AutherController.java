@@ -7,22 +7,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/authors")
 public class AutherController {
 
     @Autowired
     AuthorService AuhtorComp;
-
-    @RequestMapping(value = "/Authors")
+    //http://localhost:8080/authors/all
+    @RequestMapping(value = "/all")
     public List<Author> GetAuthors()
     {
         return AuhtorComp.GetAuthors();
     }
-    @RequestMapping(method = RequestMethod.DELETE,value = "/DeleteAuthor/{AuthorID}")
-    public void DeleteAuhtor(@PathVariable Integer AuthorID)
+    //http://localhost:8080/authors/deleteAuthor/{AuthorID}
+    @RequestMapping(method = RequestMethod.DELETE,value = "/deleteAuthor/{AuthorID}")
+    public void DeleteAuhtor(@PathVariable Integer AuthorID, @RequestHeader)
     {
+
+        System.out.println("dELETE 2 "+AuthorID);
         AuhtorComp.DeleteAuthor(AuthorID);
+        System.out.println("dELETE 3 "+AuthorID);
     }
-    @RequestMapping(method = RequestMethod.POST,value = "/AddAuthor/")
+    //http://localhost:8080/authors/addAuthor
+    @RequestMapping(method = RequestMethod.POST,value = "/addAuthor/")
     public void AddAuthor(@RequestBody Author Author) {
         AuhtorComp.addAuthor(Author);
     }

@@ -15,7 +15,7 @@ public class Book {
     String name;
     @ManyToOne
     private Author author;
-    @JsonIgnore
+    //@JsonIgnore
 //    @ManyToMany(mappedBy = "books")
 //    private List<Customer> Customers;
     public Author getAuthor() {

@@ -29,8 +29,11 @@ public class AuthorService {
     }
     public void DeleteAuthor(Integer id) {
        try {
-           restTemplate.delete("http://localhost:8080/DeleteAuthorBooks/" + id);
-           authorRepository.deleteById(id);
+
+           System.out.println("dELETE service ");
+        //  restTemplate.delete("http://localhost:8080/books/deleteAuthorBooks/" + id);
+           System.out.println("dELETE service 2");
+          authorRepository.deleteById(id);
        }catch (EmptyResultDataAccessException e)
        {
            throw new AllException("This Author is Not in our BookShop",HttpStatus.NOT_FOUND);

@@ -23,7 +23,7 @@ public class Controller_Advice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> AnyUnImplementedException(Exception e)
     {
-        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR,"General Exception"),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR,e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
