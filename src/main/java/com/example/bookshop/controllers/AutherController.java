@@ -14,23 +14,25 @@ public class AutherController {
     AuthorService AuhtorComp;
     //http://localhost:8080/authors/all
     @RequestMapping(value = "/all")
-    public List<Author> GetAuthors()
+    public List<Author> getAuthors()
     {
+      //  System.out.println(jwtUtil.extractUsername(token));
         return AuhtorComp.GetAuthors();
     }
     //http://localhost:8080/authors/deleteAuthor/{AuthorID}
     @RequestMapping(method = RequestMethod.DELETE,value = "/deleteAuthor/{AuthorID}")
-    public void DeleteAuhtor(@PathVariable Integer AuthorID, @RequestHeader)
+    public void deleteAuhtor(@PathVariable Integer AuthorID)
     {
-
-        System.out.println("dELETE 2 "+AuthorID);
         AuhtorComp.DeleteAuthor(AuthorID);
-        System.out.println("dELETE 3 "+AuthorID);
     }
     //http://localhost:8080/authors/addAuthor
     @RequestMapping(method = RequestMethod.POST,value = "/addAuthor/")
-    public void AddAuthor(@RequestBody Author Author) {
+    public void addAuthor(@RequestBody Author Author) {
         AuhtorComp.addAuthor(Author);
+    }
+    @RequestMapping(value = "/AuthorId")
+    public Author getAuthorById(@RequestParam("AuthorId") int AuthorId){
+        return AuhtorComp.getAuthorById(AuthorId);
     }
 
 }

@@ -25,14 +25,11 @@ public class AuthorService {
         {
             throw new AllException("The name is empty",HttpStatus.BAD_REQUEST,Author);
         }
+
         authorRepository.save(Author);
     }
     public void DeleteAuthor(Integer id) {
        try {
-
-           System.out.println("dELETE service ");
-        //  restTemplate.delete("http://localhost:8080/books/deleteAuthorBooks/" + id);
-           System.out.println("dELETE service 2");
           authorRepository.deleteById(id);
        }catch (EmptyResultDataAccessException e)
        {
@@ -47,4 +44,7 @@ public class AuthorService {
     }
 
 
+    public Author getAuthorById(int authorId) {
+        return authorRepository.findById(authorId).get();
+    }
 }

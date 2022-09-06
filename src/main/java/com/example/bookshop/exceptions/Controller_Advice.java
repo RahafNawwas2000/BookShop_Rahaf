@@ -20,6 +20,19 @@ public class Controller_Advice {
         String stackTrace="Trace";
     return new ResponseEntity<ErrorMessage>(new ErrorMessage(httpstatus,e.getMessage(),stackTrace,data),httpstatus);
     }
+
+    @ExceptionHandler(nullObject.class)
+    public ResponseEntity<ErrorMessage> nullExceptionHandler(nullObject e)
+    {
+        HttpStatus httpstatus=HttpStatus.NOT_FOUND;
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(httpstatus,e.getMessage()),httpstatus);
+    }
+    @ExceptionHandler(stockEqualZero.class)
+    public ResponseEntity<ErrorMessage> stockExceptionHandler(stockEqualZero e)
+    {
+        HttpStatus httpstatus=HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(httpstatus,e.getMessage(),"",e.getData()),httpstatus);
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> AnyUnImplementedException(Exception e)
     {

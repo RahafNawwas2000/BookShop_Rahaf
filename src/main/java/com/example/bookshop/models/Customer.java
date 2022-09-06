@@ -1,16 +1,26 @@
 package com.example.bookshop.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "Customer")
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    int id;
-    String name;
+//@Table(name = "Customer")
+public class Customer extends LibraryUser{
+//   @Id
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+//   int id;
+   String name;
+//    @Column(unique = true)
+//    String username;
+//    String password;
+//    String role;
+
     @ManyToMany
     @JoinTable(
             name = "Books_Customer",
@@ -23,41 +33,18 @@ public class Customer {
         super();
     }
 
-    public Customer(int id, String name, List<Book> books) {
-        this.id = id;
-        this.name = name;
+    public Customer(int id,String userName,String name,String password,String role, List<Book> books) {
+//        this.id = id;
+//        this.name = name;
+        super(id,userName,password,true,"ROLE_CUSTOMER");
         this.books = books;
+        this.name=name;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
     @Override
     public String toString() {
         return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "id=" + getId() +
+                ", name='" + getUserName() + '\'' +
                 ", books=" + books +
                 '}';
     }
@@ -66,4 +53,6 @@ public class Customer {
     {
         books.add(book);
     }
+
+
 }

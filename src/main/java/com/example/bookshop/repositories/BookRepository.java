@@ -11,4 +11,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
    public List<Book> findAllByAuthorId(Integer AuthorId);
    @Transactional
    void deleteAllByAuthorId(Integer authorID);
+   Book findByName(String bookName);
+
+   Book findByIsbn(String bookISBN);
 }

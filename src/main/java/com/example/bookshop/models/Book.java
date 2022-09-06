@@ -1,10 +1,15 @@
 package com.example.bookshop.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 
+@Getter
+@Setter
 @Entity
 @Table(name = "Book")
 public class Book {
@@ -15,15 +20,12 @@ public class Book {
     String name;
     @ManyToOne
     private Author author;
-    //@JsonIgnore
-//    @ManyToMany(mappedBy = "books")
-//    private List<Customer> Customers;
-    public Author getAuthor() {
-        return author;
-    }
-    public void setAuthor(Author authors) {
-        author = authors;
-    }
+    int Stock;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "books")
+    private List<Customer> Customers;
+
     public Book() {
     	super();
     }
@@ -31,27 +33,10 @@ public class Book {
         this.id = id;
         this.isbn = isbn;
         this.name = name;
-        this.author=new Author(AuthorId,"");
+        this.author=new Author(AuthorId,"","");
 
     }
-    public String getIsbn() {
-        return isbn;
-    }
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
+
     @Override
     public String toString() {
         return "Book{" +

@@ -1,51 +1,69 @@
 package com.example.bookshop.controllers;
 
+import com.example.bookshop.DTOS.CustomerDTO;
 import com.example.bookshop.services.CustomerService;
 import com.example.bookshop.models.Book;
 import com.example.bookshop.models.Customer;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(value = "/customers")
 public class CustomerController {
 
     @Autowired
     CustomerService CustomerComp;
-
-    @RequestMapping(value = "/Customers")
-    public List<Customer> GetAllCustomers()
+    @Autowired
+    private ModelMapper modelMapper;
+    @RequestMapping(value = "/all")
+    public ResponseEntity<List<CustomerDTO>> getAllCustomers()
     {
-        return CustomerComp.GetAllCustomer();
+        return new ResponseEntity<List<CustomerDTO>>(CustomerComp.GetAllCustomer().stream().map(customer -> modelMapper.map(customer, CustomerDTO.class)).collect(Collectors.toList()),HttpStatus.OK);
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "/DeleteCustomer/{CustomerId}",method = RequestMethod.DELETE)
-    public void DeleteCustomer(@PathVariable Integer CustomerId)
+    @RequestMapping(value = "/deleteCustomer/{CustomerId}",method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteCustomer(@PathVariable Integer CustomerId)
     {
          CustomerComp.DeleteCustomerById(CustomerId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "/Customers/{CustomerId}/Books")
-    public List<Book> GetCustomerBooks(@PathVariable Integer CustomerId) {
-        return CustomerComp.GetCustomerBooks(CustomerId);          //cutomer for specific book
+    @RequestMapping(value = "/customers/{CustomerId}/books")
+    public ResponseEntity<List<Book>> getCustomerBooks(@PathVariable Integer CustomerId) {
+        return new ResponseEntity<List<Book>>(CustomerComp.GetCustomerBooks(CustomerId),HttpStatus.OK);          //cutomer for specific book
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "/Customers/Books/{BookId}")
-    public List<Customer> GetBookCustomer(@PathVariable Integer BookId)
+    @RequestMapping(value = "/customers/books/{BookId}")
+    public ResponseEntity<List<CustomerDTO>> getBookCustomer(@PathVariable Integer BookId)
     {
-        return CustomerComp.GetBookCustomers(BookId);
+        return new ResponseEntity<List<CustomerDTO>>(CustomerComp.GetBookCustomers(BookId).stream().map(customer -> modelMapper.map(customer, CustomerDTO.class)).collect(Collectors.toList()),HttpStatus.OK);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "/CreateCustomer",method = RequestMethod.POST)
-    public Customer AddCustomer(@RequestBody Customer customer)
+    @RequestMapping(value = "/createCustomer",method = RequestMethod.POST)
+    public ResponseEntity<CustomerDTO> addCustomer(@RequestBody Customer customer)
     {
-        return CustomerComp.addCustomer(customer);
+         Customer custom=CustomerComp.addCustomer(customer);
+         CustomerDTO customerDTO=modelMapper.map(custom, CustomerDTO.class);
+         return new ResponseEntity<CustomerDTO>(customerDTO,HttpStatus.CREATED);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "/Customer/{CustomerId}/BuyBook/{BookId}")
-    public void BuyBook(@PathVariable Integer CustomerId,@PathVariable Integer BookId) {
+    @RequestMapping(value = "/rentBook")
+    public void rentBook(@RequestParam("CustomerId") Integer CustomerId,@RequestParam("BookId") Integer BookId) {
 
-        CustomerComp.BuyBookByCustomer(CustomerId,BookId);
+        CustomerComp.rentBook(CustomerId,BookId);
     }
+
+    @RequestMapping(value = "/returnBook")
+    public void returnBook(@RequestParam("CustomerId") Integer CustomerId,@RequestParam("BookId") Integer BookId) {
+
+        CustomerComp.returnBook(CustomerId,BookId);
+    }
+
+
 }

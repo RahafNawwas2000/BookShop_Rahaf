@@ -51,4 +51,33 @@ public class BookService {
     public void DeleteAuthorBooks(Integer authorID) {
         BOOK_JPA.deleteAllByAuthorId(authorID);
     }
+
+    public Book getBookByName(String bookName) {
+        return  BOOK_JPA.findByName(bookName);
+    }
+
+    public Book getBookByISBN(String bookISBN) {
+        return  BOOK_JPA.findByIsbn(bookISBN);
+    }
+
+    public int getBookStock(int bookId) {
+
+          return BOOK_JPA.findById(bookId).get().getStock();
+    }
+
+    public void increaseStock(int bookId) {
+        Book book=BOOK_JPA.findById(bookId).get();
+        book.setStock(book.getStock()+1);
+        BOOK_JPA.save(book);
+    }
+
+    public void decreaseStock(int bookId) {
+        Book book=BOOK_JPA.findById(bookId).get();
+        if(book.getStock()==0)
+        {
+            return;
+        }
+        book.setStock(book.getStock()-1);
+        BOOK_JPA.save(book);
+    }
 }
